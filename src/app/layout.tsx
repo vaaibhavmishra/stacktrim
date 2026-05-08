@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "800"],
+  display: "swap",
+  variable: "--font-dm-sans",
+});
 
 export const metadata: Metadata = {
   title: "StackTrim AI Spend Audit",
@@ -18,8 +26,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-[#f7f8f4] font-sans text-[#17201b] antialiased">{children}</body>
+    <html lang="en" className={dmSans.variable}>
+      <body className="min-h-screen bg-[#f7f8f4] font-[var(--font-dm-sans),ui-sans-serif,system-ui,sans-serif] text-[#17201b] antialiased">{children}</body>
     </html>
   );
 }
