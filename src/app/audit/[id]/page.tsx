@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAudit } from "@/lib/storage";
+import { Nav } from "../../components/nav";
 import { Results } from "../../components/results";
 
 interface Props {
@@ -39,10 +39,7 @@ export default async function AuditPage({ params }: Props) {
 
   return (
     <main className="min-h-screen">
-      <nav className="flex items-center justify-between border-b border-[#dfe5da] px-[clamp(18px,4vw,56px)] py-[18px]">
-        <Link href="/" className="text-lg font-extrabold text-[#113b28] no-underline">StackTrim</Link>
-        <span>Public report</span>
-      </nav>
+      <Nav rightLabel="Public report" />
       <Results result={audit} publicView />
     </main>
   );

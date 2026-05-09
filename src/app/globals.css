@@ -1,1 +1,32 @@
 @import "tailwindcss";
+
+/* 4c: Design token system — all magic colors centralized here */
+:root {
+  /* Brand */
+  --color-brand: #143c2a;
+  --color-brand-hover: #1a5038;
+  --color-brand-dark: #113b28;
+  --color-accent: #2f7c57;
+  --color-savings: #176b45;
+
+  /* Surfaces */
+  --color-bg: #f7f8f4;
+  --color-surface: #ffffff;
+  --color-hero-savings: #183f2d;
+  --color-hero-optimized: #35413a;
+  --color-callout-savings-bg: #eaf4e6;
+  --color-callout-savings-border: #cfe1c8;
+  --color-callout-optimized-bg: #eef1ed;
+
+  /* Text */
+  --color-text-primary: #17201b;
+  --color-text-secondary: #526055;
+  --color-text-muted: #5b675d;
+  --color-text-label: #445147;
+  --color-text-body: #344238;
+  --color-text-annualized: #dce9d8;
+
+  /* Borders */
+  --color-border: #dfe5da;
+  --color-border-input: #ccd5c7;
+}

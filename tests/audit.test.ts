@@ -10,7 +10,7 @@ test("downgrades Cursor Business for two users to Pro", () => {
     tools: [{ id: "cursor", plan: "Business", seats: 2, monthlySpend: 80 }]
   });
   assert.equal(result.totalMonthlySavings, 40);
-  assert.match(result.recommendations[0].recommendedAction, /Cursor Pro/);
+  assert.match(result.recommendations[0]!.recommendedAction, /Cursor Pro/);
 });
 
 test("downgrades Copilot Enterprise for small teams to Business", () => {
@@ -29,7 +29,7 @@ test("respects Claude Team five seat minimum when reducing to Pro", () => {
     tools: [{ id: "claude", plan: "Team", seats: 3, monthlySpend: 125 }]
   });
   assert.equal(result.totalMonthlySavings, 65);
-  assert.equal(result.recommendations[0].recommendedSpend, 60);
+  assert.equal(result.recommendations[0]!.recommendedSpend, 60);
 });
 
 test("flags Gemini Ultra as overkill for mixed teams", () => {
