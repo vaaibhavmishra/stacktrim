@@ -8,6 +8,16 @@ function env(name: string): string | undefined {
   return process.env[name]?.trim() || undefined;
 }
 
+// 6a: Fail fast if Supabase is partially configured
+const _supabaseUrl = env("SUPABASE_URL");
+const _supabaseKey = env("SUPABASE_SERVICE_ROLE_KEY");
+if (_supabaseUrl && !_supabaseKey) {
+  throw new Error("SUPABASE_SERVICE_ROLE_KEY is required when SUPABASE_URL is set");
+}
+if (!_supabaseUrl && _supabaseKey) {
+  throw new Error("SUPABASE_URL is required when SUPABASE_SERVICE_ROLE_KEY is set");
+}
+
 export function makeId(): string {
   return crypto.randomUUID().slice(0, 8);
 }

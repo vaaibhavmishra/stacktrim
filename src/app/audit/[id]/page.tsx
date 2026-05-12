@@ -8,6 +8,9 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
+// 6d: Public reports rarely change — revalidate hourly to avoid hitting Supabase on every view
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const audit = await getAudit(id);

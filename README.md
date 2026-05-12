@@ -8,9 +8,9 @@ Deployed URL: pending deployment.
 
 Local smoke-test screenshots:
 
-- ![Spend input form](docs/screenshots/form.png)
-- ![High-savings public report](docs/screenshots/public-report.png)
-- ![Optimized public report](docs/screenshots/optimized-report.png)
+- ![Spend input form](public/screenshots/form.png)
+- ![High-savings public report](public/screenshots/public-report.png)
+- ![Optimized public report](public/screenshots/optimized-report.png)
 
 ## Quick Start
 
