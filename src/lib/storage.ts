@@ -12,10 +12,14 @@ function env(name: string): string | undefined {
 const _supabaseUrl = env("SUPABASE_URL");
 const _supabaseKey = env("SUPABASE_SERVICE_ROLE_KEY");
 if (_supabaseUrl && !_supabaseKey) {
-  throw new Error("SUPABASE_SERVICE_ROLE_KEY is required when SUPABASE_URL is set");
+  throw new Error(
+    "SUPABASE_SERVICE_ROLE_KEY is required when SUPABASE_URL is set",
+  );
 }
 if (!_supabaseUrl && _supabaseKey) {
-  throw new Error("SUPABASE_URL is required when SUPABASE_SERVICE_ROLE_KEY is set");
+  throw new Error(
+    "SUPABASE_URL is required when SUPABASE_SERVICE_ROLE_KEY is set",
+  );
 }
 
 export function makeId(): string {
@@ -35,11 +39,12 @@ export async function saveAudit(result: AuditResult): Promise<AuditResult> {
         apikey: serviceKey,
         authorization: `Bearer ${serviceKey}`,
         "content-type": "application/json",
-        prefer: "resolution=merge-duplicates"
+        prefer: "resolution=merge-duplicates",
       },
-      body: JSON.stringify({ id, payload: saved })
+      body: JSON.stringify({ id, payload: saved }),
     });
-    if (!response.ok) throw new Error(`Supabase audit save failed: ${response.status}`);
+    if (!response.ok)
+      throw new Error(`Supabase audit save failed: ${response.status}`);
     return saved;
   }
 
@@ -54,14 +59,18 @@ export async function getAudit(id: string): Promise<AuditResult | null> {
   const serviceKey = env("SUPABASE_SERVICE_ROLE_KEY");
 
   if (supabaseUrl && serviceKey) {
-    const response = await fetch(`${supabaseUrl}/rest/v1/audits?id=eq.${encodeURIComponent(id)}&select=payload`, {
-      headers: {
-        apikey: serviceKey,
-        authorization: `Bearer ${serviceKey}`
+    const response = await fetch(
+      `${supabaseUrl}/rest/v1/audits?id=eq.${encodeURIComponent(id)}&select=payload`,
+      {
+        headers: {
+          apikey: serviceKey,
+          authorization: `Bearer ${serviceKey}`,
+        },
+        cache: "no-store",
       },
-      cache: "no-store"
-    });
-    if (!response.ok) throw new Error(`Supabase audit fetch failed: ${response.status}`);
+    );
+    if (!response.ok)
+      throw new Error(`Supabase audit fetch failed: ${response.status}`);
     const rows = (await response.json()) as { payload: AuditResult }[];
     return rows[0]?.payload ?? null;
   }
@@ -80,17 +89,18 @@ export async function saveLead(lead: LeadInput): Promise<void> {
       headers: {
         apikey: serviceKey,
         authorization: `Bearer ${serviceKey}`,
-        "content-type": "application/json"
+        "content-type": "application/json",
       },
       body: JSON.stringify({
         audit_id: lead.auditId,
         email: lead.email,
         company: lead.company ?? null,
         role: lead.role ?? null,
-        team_size: lead.teamSize ?? null
-      })
+        team_size: lead.teamSize ?? null,
+      }),
     });
-    if (!response.ok) throw new Error(`Supabase lead save failed: ${response.status}`);
+    if (!response.ok)
+      throw new Error(`Supabase lead save failed: ${response.status}`);
   }
 
   await sendConfirmation(lead);
@@ -105,20 +115,22 @@ async function sendConfirmation(lead: LeadInput): Promise<void> {
     method: "POST",
     headers: {
       authorization: `Bearer ${resendKey}`,
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
     body: JSON.stringify({
       from,
       to: lead.email,
       subject: "Your StackTrim AI spend audit",
-      html: `<p>Your AI spend audit is ready.</p><p>Public report: ${env("NEXT_PUBLIC_APP_URL") ?? ""}/audit/${lead.auditId}</p><p>If the audit found a high-savings opportunity, Credex can help turn the savings into credits and procurement leverage.</p>`
-    })
+      html: `<p>Your AI spend audit is ready.</p><p>Public report: ${env("NEXT_PUBLIC_APP_URL") ?? ""}/audit/${lead.auditId}</p><p>If the audit found a high-savings opportunity, Credex can help turn the savings into credits and procurement leverage.</p>`,
+    }),
   });
 }
 
 async function readLocal(): Promise<{ audits: Record<string, AuditResult> }> {
   try {
-    return JSON.parse(await fs.readFile(localFile, "utf8")) as { audits: Record<string, AuditResult> };
+    return JSON.parse(await fs.readFile(localFile, "utf8")) as {
+      audits: Record<string, AuditResult>;
+    };
   } catch {
     return { audits: {} };
   }

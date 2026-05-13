@@ -2,8 +2,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { tools } from "@/lib/pricing";
-import type { AuditInput, AuditResult, ToolInput, UseCase } from "@/lib/types";
+import { tools } from "../lib/pricing";
+import type { AuditInput, AuditResult, ToolInput, UseCase } from "../lib/types";
 
 const storageKey = "stacktrim-form";
 
@@ -11,7 +11,7 @@ const defaultTools: ToolInput[] = tools.map((tool) => ({
   id: tool.id,
   plan: tool.plans[0]?.label ?? "API direct",
   seats: 1,
-  monthlySpend: tool.plans[0]?.monthlyPerSeat ?? 0
+  monthlySpend: tool.plans[0]?.monthlyPerSeat ?? 0,
 }));
 
 export function useAuditForm() {
@@ -34,21 +34,27 @@ export function useAuditForm() {
 
   // Persist form state to localStorage on every change
   useEffect(() => {
-    window.localStorage.setItem(storageKey, JSON.stringify({ teamSize, useCase, tools: toolInputs }));
+    window.localStorage.setItem(
+      storageKey,
+      JSON.stringify({ teamSize, useCase, tools: toolInputs }),
+    );
   }, [teamSize, useCase, toolInputs]);
 
   const total = useMemo(
-    () => toolInputs.reduce((sum, tool) => sum + Number(tool.monthlySpend || 0), 0),
-    [toolInputs]
+    () =>
+      toolInputs.reduce((sum, tool) => sum + Number(tool.monthlySpend || 0), 0),
+    [toolInputs],
   );
 
   const hasSpend = useMemo(
     () => toolInputs.some((tool) => tool.monthlySpend > 0),
-    [toolInputs]
+    [toolInputs],
   );
 
   function updateTool(index: number, patch: Partial<ToolInput>) {
-    setToolInputs((current) => current.map((tool, i) => (i === index ? { ...tool, ...patch } : tool)));
+    setToolInputs((current) =>
+      current.map((tool, i) => (i === index ? { ...tool, ...patch } : tool)),
+    );
   }
 
   function dismissError() {
@@ -63,7 +69,11 @@ export function useAuditForm() {
       const response = await fetch("/api/audit", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ teamSize, useCase, tools: toolInputs.filter((tool) => tool.monthlySpend > 0) })
+        body: JSON.stringify({
+          teamSize,
+          useCase,
+          tools: toolInputs.filter((tool) => tool.monthlySpend > 0),
+        }),
       });
       if (!response.ok) {
         const body = await response.json().catch(() => null);
@@ -71,7 +81,11 @@ export function useAuditForm() {
       }
       setResult((await response.json()) as AuditResult);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again.",
+      );
     } finally {
       setLoading(false);
     }

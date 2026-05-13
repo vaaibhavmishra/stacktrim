@@ -1187,6 +1187,78 @@
       "verdict": "optimized",
       "summary": "Your AI stack is already fairly disciplined at $49.99/mo. The audit found less than $100/mo in defensible cuts, so the best move is to keep monitoring plan changes and consolidate only when usage patterns become clearer.",
       "id": "84561c68"
+    },
+    "57d221c6": {
+      "createdAt": "2026-05-14T03:22:48.009Z",
+      "input": {
+        "teamSize": 6,
+        "useCase": "coding",
+        "tools": [
+          {
+            "id": "github-copilot",
+            "plan": "Individual",
+            "seats": 1,
+            "monthlySpend": 10
+          },
+          {
+            "id": "chatgpt",
+            "plan": "Plus",
+            "seats": 1,
+            "monthlySpend": 20
+          },
+          {
+            "id": "gemini",
+            "plan": "Pro",
+            "seats": 1,
+            "monthlySpend": 19.99
+          }
+        ]
+      },
+      "recommendations": [
+        {
+          "toolId": "github-copilot",
+          "toolName": "GitHub Copilot",
+          "currentPlan": "Individual",
+          "currentSpend": 10,
+          "recommendedAction": "Keep current setup",
+          "recommendedSpend": 10,
+          "monthlySavings": 0,
+          "annualSavings": 0,
+          "reason": "Copilot plan fits the coding-heavy usage profile.",
+          "kind": "keep"
+        },
+        {
+          "toolId": "chatgpt",
+          "toolName": "ChatGPT",
+          "currentPlan": "Plus",
+          "currentSpend": 20,
+          "recommendedAction": "Keep current setup",
+          "recommendedSpend": 20,
+          "monthlySavings": 0,
+          "annualSavings": 0,
+          "reason": "ChatGPT plan is reasonable for the stated team size.",
+          "kind": "keep"
+        },
+        {
+          "toolId": "gemini",
+          "toolName": "Gemini",
+          "currentPlan": "Pro",
+          "currentSpend": 19.99,
+          "recommendedAction": "Keep current setup",
+          "recommendedSpend": 19.99,
+          "monthlySavings": 0,
+          "annualSavings": 0,
+          "reason": "Gemini spend looks proportionate to the selected plan.",
+          "kind": "keep"
+        }
+      ],
+      "totalCurrentSpend": 49.99,
+      "totalRecommendedSpend": 49.99,
+      "totalMonthlySavings": 0,
+      "totalAnnualSavings": 0,
+      "verdict": "optimized",
+      "summary": "Your AI stack is already fairly disciplined at $49.99/mo. The audit found less than $100/mo in defensible cuts, so the best move is to keep monitoring plan changes and consolidate only when usage patterns become clearer.",
+      "id": "57d221c6"
     }
   }
 }

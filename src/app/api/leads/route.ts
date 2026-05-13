@@ -17,12 +17,19 @@ function rateLimit(ip: string): boolean {
 
 export async function POST(request: Request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0] ?? "local";
-  if (!rateLimit(ip)) return NextResponse.json({ error: "Too many submissions." }, { status: 429 });
+  if (!rateLimit(ip))
+    return NextResponse.json(
+      { error: "Too many submissions." },
+      { status: 429 },
+    );
 
   const lead = (await request.json()) as LeadInput;
   if (lead.website) return NextResponse.json({ ok: true });
   if (!lead.email || !lead.email.includes("@") || !lead.auditId) {
-    return NextResponse.json({ error: "A valid email and audit id are required." }, { status: 400 });
+    return NextResponse.json(
+      { error: "A valid email and audit id are required." },
+      { status: 400 },
+    );
   }
 
   await saveLead(lead);

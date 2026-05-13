@@ -23,7 +23,12 @@ export interface AuditInput {
   tools: ToolInput[];
 }
 
-export type RecommendationKind = "keep" | "downgrade" | "switch" | "credits" | "review";
+export type RecommendationKind =
+  | "keep"
+  | "downgrade"
+  | "switch"
+  | "credits"
+  | "review";
 
 export interface ToolRecommendation {
   toolId: ToolId;
