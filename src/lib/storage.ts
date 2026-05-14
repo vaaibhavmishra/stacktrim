@@ -1,12 +1,11 @@
 import { promises as fs } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import type { AuditResult, LeadInput } from "./types";
 
-import os from "node:os";
-
 const localFile = path.join(
   process.env.NODE_ENV === "production" ? os.tmpdir() : process.cwd(),
-  "local-audits.json"
+  "local-audits.json",
 );
 
 function env(name: string): string | undefined {
